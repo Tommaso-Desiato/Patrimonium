@@ -1,0 +1,23 @@
+<p>Get token at //INSERIRE LINK GOREST//</p>
+<form #loginForm="ngForm" (ngSubmit)="onLogin()">
+  <mat-form-field appearance="outline">
+    <mat-label>Enter token here</mat-label>
+    <input
+      matInput
+      name="token"
+      [(ngModel)]="userToken"
+      #tokenInput="ngModel"
+      required
+    />
+  </mat-form-field>
+
+  <button
+    type="submit"
+    mat-stroked-button
+    [disabled]="loginForm.invalid"
+    disabledInteractive
+    matTooltip="Enter a Token to login"
+  >
+    Login
+  </button>
+</form>
