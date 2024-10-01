@@ -19,4 +19,8 @@ export class AuthService {
   removeToken(): void {
     localStorage.removeItem(this.tokenKey);
   }
+  //Verify if user is authenticated 
+  isAuthenticated(): boolean {
+    return !!this.getToken(); //Double negation returns true if token exist
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter} from '@angular/core';
+import { Component, Output, EventEmitter, OnInit} from '@angular/core';
 import {MatFormFieldModule,} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
@@ -7,19 +7,25 @@ import { FormsModule } from '@angular/forms';
 import { ApiCallService } from '../../services/api-call.service';
 import { User } from '../../models/user-model';
 import { AuthService } from '../../services/auth.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login-form',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatTooltip, FormsModule ],
+  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatTooltip, FormsModule, NgIf],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css'
 })
-export class LoginFormComponent {
+export class LoginFormComponent implements OnInit {
 
   constructor(private apiCall: ApiCallService, private authService: AuthService) {}
   
+  ngOnInit(): void {
+    this.isAuthenticated = this.authService.isAuthenticated();
+  }
+  
   userToken: string = '';
+  isAuthenticated : boolean = false;
 
   @Output() submitEvent = new EventEmitter<User[]>();
 
@@ -29,5 +35,7 @@ export class LoginFormComponent {
     this.apiCall.getUsers().subscribe(res => {
       this.submitEvent.emit(res);
     });
+
+    this.isAuthenticated = true;
   }
 }
