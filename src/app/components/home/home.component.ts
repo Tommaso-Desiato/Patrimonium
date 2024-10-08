@@ -1,21 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiCallService } from '../../services/api-call.service';
-import { AsyncPipe, NgFor } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { User } from '../../models/user-model';
 import { LoginFormComponent } from "../login-form/login-form.component";
-
-
+import { AuthService } from '../../services/auth.service';
+import { HeaderComponent } from "../header/header.component";
+import {MatExpansionModule} from '@angular/material/expansion'; 
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgFor, AsyncPipe, LoginFormComponent],
+  imports: [NgFor, NgIf, AsyncPipe, LoginFormComponent, HeaderComponent,MatExpansionModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 
-export class HomeComponent{
+export class HomeComponent implements OnInit{
+  isAuthenticated: boolean = false;
   users: User[] = [];
 
   addUsers(users: User[]) {
@@ -29,7 +31,17 @@ export class HomeComponent{
     status: 'active'
   };
 
-  constructor(private apiCall: ApiCallService) {}
+  constructor(private apiCall: ApiCallService, private authService: AuthService) {}
+
+  ngOnInit(): void {
+    //Subscribe to authentication status
+    this.authService.authStatus$.subscribe(status => {
+      this.isAuthenticated = status;
+      this.apiCall.getUsers().subscribe(res => {
+        this.users = res;
+      })
+    });
+  }
 
   createUser() {
     this.apiCall.createUser(this.customUser).subscribe(data => {

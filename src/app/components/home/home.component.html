@@ -1,6 +1,23 @@
+<app-header></app-header>
+
 <app-login-form (submitEvent)="addUsers($event)"></app-login-form>
 
-<div *ngFor="let user of users">
-  <p>Name: {{ user.name }}</p>
-  <p>Email: {{ user.email }}</p>
+<mat-accordion *ngIf="isAuthenticated">
+  <mat-expansion-panel *ngFor="let user of users">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Name: </mat-panel-title>
+      <mat-panel-description> Name: {{ user.name }} </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>Email: {{ user.email }}</p>
+    <p>Gender: {{ user.gender }}</p>
+    <p>Status: {{ user.status }}</p>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<div *ngIf="isAuthenticated">
+  <p>Benvenuto utente</p>
+</div>
+
+<div *ngIf="!isAuthenticated">
+  <p>Non sei autenticato</p>
 </div>

@@ -21,7 +21,10 @@ export class LoginFormComponent implements OnInit {
   constructor(private apiCall: ApiCallService, private authService: AuthService) {}
   
   ngOnInit(): void {
-    this.isAuthenticated = this.authService.isAuthenticated();
+    //Subscribe to authentication status
+    this.authService.authStatus$.subscribe(status => {
+      this.isAuthenticated = status;
+    });
   }
   
   userToken: string = '';
