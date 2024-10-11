@@ -6,12 +6,14 @@ import { LoginFormComponent } from "../login-form/login-form.component";
 import { AuthService } from '../../services/auth.service';
 import { HeaderComponent } from "../header/header.component";
 import {MatExpansionModule} from '@angular/material/expansion'; 
+import { RouterModule } from '@angular/router';
+import { UserPostsComponent } from "../user-posts/user-posts.component";
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgFor, NgIf, AsyncPipe, LoginFormComponent, HeaderComponent,MatExpansionModule],
+  imports: [NgFor, NgIf, AsyncPipe, LoginFormComponent, HeaderComponent, MatExpansionModule, RouterModule, UserPostsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })

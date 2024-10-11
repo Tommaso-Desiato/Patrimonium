@@ -1,5 +1,3 @@
-<app-header></app-header>
-
 <app-login-form (submitEvent)="addUsers($event)"></app-login-form>
 
 <mat-accordion *ngIf="isAuthenticated">
@@ -8,9 +6,14 @@
       <mat-panel-title> Name: </mat-panel-title>
       <mat-panel-description> Name: {{ user.name }} </mat-panel-description>
     </mat-expansion-panel-header>
-    <p>Email: {{ user.email }}</p>
-    <p>Gender: {{ user.gender }}</p>
-    <p>Status: {{ user.status }}</p>
+    <ng-template matExpansionPanelContent>
+      <p>Email: {{ user.email }}</p>
+      <p>Gender: {{ user.gender }}</p>
+      <p>Status: {{ user.status }}</p>
+    </ng-template>
+    <mat-action-row>
+      <a routerLink="/user-posts">See user posts</a>
+    </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
 
