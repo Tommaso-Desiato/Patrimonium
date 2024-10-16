@@ -25,4 +25,7 @@ export class ApiCallService {
     return this.http.post(`${this.apiUrl}`, newUser, { headers });
   }
 
+  getUserPosts(userId: string):Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/${userId}/posts`);
+  }
 }

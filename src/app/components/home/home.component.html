@@ -12,7 +12,12 @@
       <p>Status: {{ user.status }}</p>
     </ng-template>
     <mat-action-row>
-      <a routerLink="/user-posts">See user posts</a>
+      <a
+        [routerLink]="['/user-posts', user.id]"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        >See user posts</a
+      >
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
