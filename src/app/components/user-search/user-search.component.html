@@ -1,0 +1,13 @@
+<form #userSearch="ngForm" (submit)="onSubmit()">
+  <mat-form-field appearance="outline">
+    <input
+      matInput
+      type="text"
+      [(ngModel)]="query"
+      name="query"
+      placeholder="Search Users by Name"
+      required
+    />
+  </mat-form-field>
+  <button mat-stroked-button type="submit">Search</button>
+</form>

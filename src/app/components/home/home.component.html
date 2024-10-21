@@ -1,10 +1,12 @@
 <app-login-form (submitEvent)="addUsers($event)"></app-login-form>
 
+<app-user-search (searchResults)="onSearchResults($event)"></app-user-search>
+
 <mat-accordion *ngIf="isAuthenticated">
   <mat-expansion-panel *ngFor="let user of users">
     <mat-expansion-panel-header>
       <mat-panel-title> Name: </mat-panel-title>
-      <mat-panel-description> Name: {{ user.name }} </mat-panel-description>
+      <mat-panel-description> {{ user.name }} </mat-panel-description>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
       <p>Email: {{ user.email }}</p>
@@ -18,13 +20,18 @@
         ariaCurrentWhenActive="page"
         >See user posts</a
       >
+      <button (click)="deleteUser(user.id)">Delete user</button>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
 
-<div *ngIf="isAuthenticated">
-  <p>Benvenuto utente</p>
-</div>
+<a
+  [routerLink]="['/user-creation']"
+  routerLinkActive="active"
+  ariaCurrentWhenActive="page"
+>
+  Create new user
+</a>
 
 <div *ngIf="!isAuthenticated">
   <p>Non sei autenticato</p>

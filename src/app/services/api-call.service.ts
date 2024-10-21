@@ -26,11 +26,24 @@ export class ApiCallService {
     return this.http.post(`${this.apiUrl}/users`, newUser, { headers });
   }
 
+  deleteUser(userId: string):Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+    return this.http.delete(`${this.apiUrl}/users/${userId}`, { headers });
+  }
+
   getUserPosts(userId: string):Observable<Post[]> {
     return this.http.get<Post[]>(`${this.apiUrl}/users/${userId}/posts`);
   }
 
   getComments(postId: string):Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/posts/${postId}/comments`);
+  }
+
+  searchByName(userName: string):Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/users?name=${userName}`);
   }
 }
