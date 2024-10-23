@@ -3,11 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiCallService } from '../../services/api-call.service';
 import { NgFor, NgIf } from '@angular/common';
 import { Post } from '../../models/post-model';
+import { CommentsComponent } from "../comments/comments.component";
 
 @Component({
   selector: 'app-user-posts',
   standalone: true,
-  imports: [NgIf, NgFor],
+  imports: [NgIf, NgFor, CommentsComponent],
   templateUrl: './user-posts.component.html',
   styleUrl: './user-posts.component.css'
 })
@@ -15,7 +16,6 @@ export class UserPostsComponent implements OnInit{
 
   userId! : string;
   posts: Post[] = [];
-  comments: any[] = [];
   postId! : string;
 
   constructor(
@@ -24,9 +24,10 @@ export class UserPostsComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
+    //Get userId from link
     this.route.paramMap.subscribe(params => {
       this.userId = params.get('id') || '';
-
+      //and use it on api call to get posts
       if (this.userId) {
         this.apiCallService.getUserPosts(this.userId).subscribe(posts => {
           this.posts = posts;
@@ -35,11 +36,12 @@ export class UserPostsComponent implements OnInit{
     });
   }
  
-  getComments(postId: string): void {
-    this.apiCallService.getComments(postId).subscribe(comments => {
-      this.comments = comments;
-      this.postId = postId;
-      console.log(comments);
-    })
+  // Track comment visibility in this object
+  showComments: { [id: string] : boolean} = {};
+
+  //When toggleComments is clicked, switch comments visibility
+  toggleComments(postId: string): void {
+    this.showComments[postId] = !this.showComments[postId];
   }
+  
 }

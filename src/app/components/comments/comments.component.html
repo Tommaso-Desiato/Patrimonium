@@ -1,0 +1,51 @@
+<div *ngIf="comments.length > 0; else noComments">
+  <ul>
+    <li *ngFor="let comment of comments">
+      <p>{{ comment.name }}</p>
+      <p>{{ comment.body }}</p>
+    </li>
+  </ul>
+</div>
+
+<ng-template #noComments>
+  <p>No comments yet.</p>
+</ng-template>
+
+<!-- New comment form-->
+<form #commentForm="ngForm" (ngSubmit)="onSubmitComment(commentForm)">
+  <mat-form-field appearance="outline">
+    <mat-label>Name</mat-label>
+    <input
+      matInput
+      type="text"
+      name="name"
+      [(ngModel)]="newComment.name"
+      required
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Email</mat-label>
+    <input
+      matInput
+      type="email"
+      name="email"
+      [(ngModel)]="newComment.email"
+      required
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Comment</mat-label>
+    <textarea
+      matInput
+      name="body"
+      [(ngModel)]="newComment.body"
+      required
+    ></textarea>
+  </mat-form-field>
+
+  <button mat-raised-button type="submit" [disabled]="commentForm.invalid">
+    Post Comment
+  </button>
+</form>
