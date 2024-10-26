@@ -43,6 +43,11 @@ export class ApiCallService {
     return this.http.get<Post[]>(`${this.apiUrl}/users/${userId}/posts`);
   }
 
+  //Get all posts
+  getAllPosts():Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.apiUrl}/posts`);
+  }
+
   //Get comments by post Id 
   getComments(postId: string):Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/posts/${postId}/comments`);
@@ -53,7 +58,7 @@ export class ApiCallService {
     return this.http.get<User[]>(`${this.apiUrl}/users?name=${userName}`);
   }
 
-  addComment(commentData : { body: string, post_id: string, name: string, email: string}):Observable<any> {
+  addComment(commentData : { body: string, email: string, name: string, post_id: string, }):Observable<any> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,

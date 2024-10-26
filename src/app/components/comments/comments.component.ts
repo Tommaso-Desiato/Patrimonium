@@ -12,7 +12,7 @@ import { response } from 'express';
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.css'
 })
-export class CommentsComponent {
+export class CommentsComponent implements OnInit {
   //Get postId from parent component
   @Input() postId!: string;
 
@@ -25,6 +25,18 @@ export class CommentsComponent {
 
   constructor(private apiCallService: ApiCallService) {}
 
+  ngOnInit(): void {
+    this.loadComments();
+    console.log(this.postId);
+  }
+
+  loadComments(): void {
+    this.apiCallService.getComments(this.postId).subscribe(comments => {
+      this.comments = comments;
+      console.log(comments);
+    })
+  }
+
   onSubmitComment(commentForm: any): void {
     if(commentForm.valid) {
       const commentData = {
@@ -34,13 +46,11 @@ export class CommentsComponent {
         post_id: this.postId,
       };
 
-      this.apiCallService.addComment(commentData).subscribe(res => {
-        console.log(res);
-        this.apiCallService.getComments(commentData.post_id).subscribe( comments => {
-          this.comments = comments;
-        });
+      this.apiCallService.addComment(commentData).subscribe(comment => {
+        console.log(comment);
+        this.comments.push(comment);
         commentForm.reset();
-      })
+      });
     }
   }
 }

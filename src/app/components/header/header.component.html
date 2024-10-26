@@ -1,3 +1,7 @@
 <header *ngIf="isAuthenticated">
-  <button (click)="logout()" mat-stroked-button>Logout</button>
+  <a [routerLink]="['']"><button mat-stroked-button>Home</button></a>
+  <a [routerLink]="['/posts-feed']"><button mat-stroked-button>Feed</button></a>
+  <a [routerLink]="['']"
+    ><button (click)="logout()" mat-stroked-button>Logout</button></a
+  >
 </header>

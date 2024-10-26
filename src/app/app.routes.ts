@@ -8,4 +8,5 @@ export const routes: Routes = [
     loadComponent: ()=> import('./components/user-posts/user-posts.component').then(c => c.UserPostsComponent)},
   {path: 'user-creation', 
     loadComponent: ()=> import('./components/user-creation/user-creation.component').then(c => c.UserCreationComponent) },
+  {path: 'posts-feed', loadComponent: ()=> import('./components/posts-feed/posts-feed.component').then(c => c.PostsFeedComponent) },
 ];
