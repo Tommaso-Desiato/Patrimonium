@@ -29,13 +29,15 @@ export class LoginFormComponent implements OnInit {
   
   userToken: string = '';
   isAuthenticated : boolean = false;
+  usersPerPage: number = 10;
+  currentPage: number = 1;
 
-  @Output() submitEvent = new EventEmitter<User[]>();
+  @Output() submitEvent = new EventEmitter<any>();
 
   onLogin():void {
     this.authService.saveToken(this.userToken);
 
-    this.apiCall.getUsers().subscribe(res => {
+    this.apiCall.getUsers(this.currentPage, this.usersPerPage).subscribe(res => {
       this.submitEvent.emit(res);
     });
 

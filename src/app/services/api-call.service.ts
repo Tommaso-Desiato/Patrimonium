@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { User } from '../models/user-model';
 import { AuthService } from './auth.service';
 import { Post } from '../models/post-model';
@@ -13,9 +13,12 @@ export class ApiCallService {
   
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  //Get users list
-  getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/users`);
+  //Get users list w/pagination params and return an object w/users array and number of total users
+  getUsers(page: number, perPage: number): Observable<{users: User[], total: number}> {
+    return this.http.get<User[]>(`${this.apiUrl}/users?page=${page}&per_page=${perPage}`, { observe: 'response' }).pipe(map((response: HttpResponse<User[]>)=> {
+      const total = +response.headers.get('x-pagination-total')!;
+      return {users: response.body || [], total };
+    }));
   }
 
   //Create user with post request and bearer token
@@ -44,8 +47,11 @@ export class ApiCallService {
   }
 
   //Get all posts
-  getAllPosts():Observable<Post[]> {
-    return this.http.get<Post[]>(`${this.apiUrl}/posts`);
+  getAllPosts(page: number, perPage: number):Observable<{posts: Post[], total: number}> {
+    return this.http.get<Post[]>(`${this.apiUrl}/posts?page=${page}&per_page=${perPage}`, {observe: 'response'}).pipe(map((response : HttpResponse<Post[]>)=> {
+      const total = +response.headers.get('x-pagination-total')!;
+      return {posts: response.body || [], total};
+    }));
   }
 
   //Get comments by post Id 

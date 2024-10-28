@@ -3,7 +3,6 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { ApiCallService } from '../../services/api-call.service';
 import { NgFor, NgIf } from '@angular/common';
-import { response } from 'express';
 
 @Component({
   selector: 'app-comments',

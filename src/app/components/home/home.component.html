@@ -36,3 +36,10 @@
 <div *ngIf="!isAuthenticated">
   <p>Non sei autenticato</p>
 </div>
+
+<app-paginator
+  [totalItems]="totalUsers"
+  [itemsPerPage]="pageSize"
+  [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)"
+></app-paginator>

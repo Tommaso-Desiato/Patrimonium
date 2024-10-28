@@ -21,3 +21,10 @@
 <ng-template #noComments>
   <p>Nessun commento trovato per questo post.</p>
 </ng-template>
+
+<app-paginator
+  [totalItems]="totalPosts"
+  [itemsPerPage]="pageSize"
+  [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)"
+></app-paginator>
