@@ -15,10 +15,27 @@ export class ApiCallService {
 
   //Get users list w/pagination params and return an object w/users array and number of total users
   getUsers(page: number, perPage: number): Observable<{users: User[], total: number}> {
-    return this.http.get<User[]>(`${this.apiUrl}/users?page=${page}&per_page=${perPage}`, { observe: 'response' }).pipe(map((response: HttpResponse<User[]>)=> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+    });
+    return this.http.get<User[]>(`${this.apiUrl}/users?page=${page}&per_page=${perPage}`, 
+      { 
+        headers: headers,
+        observe: 'response'
+      }).pipe(map((response: HttpResponse<User[]>)=> {
       const total = +response.headers.get('x-pagination-total')!;
       return {users: response.body || [], total };
     }));
+  }
+
+  //Create a new post
+  createPost(newPost: Post): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+    });
+    return this.http.post(`${this.apiUrl}/posts`, newPost, { headers })
   }
 
   //Create user with post request and bearer token
@@ -26,7 +43,6 @@ export class ApiCallService {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
     });
     return this.http.post(`${this.apiUrl}/users`, newUser, { headers });
   }
@@ -36,19 +52,30 @@ export class ApiCallService {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
     });
     return this.http.delete(`${this.apiUrl}/users/${userId}`, { headers });
   }
 
   //Get list of user posts by user Id
   getUserPosts(userId: string):Observable<Post[]> {
-    return this.http.get<Post[]>(`${this.apiUrl}/users/${userId}/posts`);
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+    })
+    return this.http.get<Post[]>(`${this.apiUrl}/users/${userId}/posts`, { headers });
   }
 
   //Get all posts
   getAllPosts(page: number, perPage: number):Observable<{posts: Post[], total: number}> {
-    return this.http.get<Post[]>(`${this.apiUrl}/posts?page=${page}&per_page=${perPage}`, {observe: 'response'}).pipe(map((response : HttpResponse<Post[]>)=> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+    })
+    return this.http.get<Post[]>(`${this.apiUrl}/posts?page=${page}&per_page=${perPage}`,
+      {
+        headers: headers,
+        observe: 'response'
+      }).pipe(map((response : HttpResponse<Post[]>)=> {
       const total = +response.headers.get('x-pagination-total')!;
       return {posts: response.body || [], total};
     }));
@@ -56,19 +83,26 @@ export class ApiCallService {
 
   //Get comments by post Id 
   getComments(postId: string):Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/posts/${postId}/comments`);
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+    });
+    return this.http.get<any[]>(`${this.apiUrl}/posts/${postId}/comments`, {headers});
   }
 
   //Get user list by name
   searchByName(userName: string):Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/users?name=${userName}`);
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+    });
+    return this.http.get<User[]>(`${this.apiUrl}/users?name=${userName}`, { headers });
   }
 
   addComment(commentData : { body: string, email: string, name: string, post_id: string, }):Observable<any> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
     });
     return this.http.post(`${this.apiUrl}/posts/${commentData.post_id}/comments`, commentData, { headers });
   }

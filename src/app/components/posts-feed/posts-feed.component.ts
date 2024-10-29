@@ -5,11 +5,13 @@ import { Post } from '../../models/post-model';
 import { ApiCallService } from '../../services/api-call.service';
 import { PaginatorComponent } from "../paginator/paginator.component";
 import { PageEvent } from '@angular/material/paginator';
+import { PostCreationComponent } from "../post-creation/post-creation.component";
+import { RouterLinkActive, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-posts-feed',
   standalone: true,
-  imports: [NgIf, NgFor, CommentsComponent, PaginatorComponent],
+  imports: [NgIf, NgFor, CommentsComponent, PaginatorComponent, PostCreationComponent, RouterModule, RouterLinkActive],
   templateUrl: './posts-feed.component.html',
   styleUrl: './posts-feed.component.css'
 })

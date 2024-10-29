@@ -1,0 +1,26 @@
+<form #postForm="ngForm" (ngSubmit)="onSubmit(postForm)">
+  <mat-form-field appearance="outline">
+    <mat-label>Title:</mat-label>
+    <input matInput name="title" [(ngModel)]="newPost.title" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label> Body: </mat-label>
+    <input
+      matInput
+      type="text"
+      name="body"
+      [(ngModel)]="newPost.body"
+      required
+    />
+  </mat-form-field>
+
+  <button
+    type="submit"
+    mat-stroked-button
+    [disabled]="postForm.invalid"
+    matTooltip="Fill all field to submit"
+  >
+    Create Post
+  </button>
+</form>
