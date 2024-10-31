@@ -99,6 +99,16 @@ export class ApiCallService {
     return this.http.get<User[]>(`${this.apiUrl}/users?name=${userName}`, { headers });
   }
 
+  //Search posts by title or body content
+  searchPosts(title: string, body: string): Observable<Post[]> {
+    //If either title or body is true, populate params
+    const params: any = {
+      ...(title ? {title} : {}),
+      ...(body ? {body} : {}),
+    };
+    return this.http.get<Post[]>(`${this.apiUrl}/posts`, { params })
+  }
+
   addComment(commentData : { body: string, email: string, name: string, post_id: string, }):Observable<any> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({

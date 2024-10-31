@@ -7,11 +7,12 @@ import { PaginatorComponent } from "../paginator/paginator.component";
 import { PageEvent } from '@angular/material/paginator';
 import { PostCreationComponent } from "../post-creation/post-creation.component";
 import { RouterLinkActive, RouterModule } from '@angular/router';
+import { PostSearchComponent } from "../post-search/post-search.component";
 
 @Component({
   selector: 'app-posts-feed',
   standalone: true,
-  imports: [NgIf, NgFor, CommentsComponent, PaginatorComponent, PostCreationComponent, RouterModule, RouterLinkActive],
+  imports: [NgIf, NgFor, CommentsComponent, PaginatorComponent, PostCreationComponent, RouterModule, RouterLinkActive, PostSearchComponent],
   templateUrl: './posts-feed.component.html',
   styleUrl: './posts-feed.component.css'
 })
@@ -37,6 +38,10 @@ export class PostsFeedComponent implements OnInit{
       this.totalPosts = res.total;
       console.log(res);
     });
+  }
+
+  onSearchResults(results: Post[]): void {
+    this.posts = results;
   }
 
   // Track comment visibility in this object

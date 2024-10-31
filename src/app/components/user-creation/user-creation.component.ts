@@ -28,7 +28,6 @@ export class UserCreationComponent {
   onSubmit(userForm: any): void {
     if(userForm.valid) {
       this.apiCallService.createUser(this.newUser).subscribe(res => {
-        console.log(res, this.newUser);
         userForm.reset();
       })
     } 

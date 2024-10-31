@@ -22,7 +22,6 @@ export class UserSearchComponent {
   onSubmit(): void {
     this.apiCallService.searchByName(this.query).subscribe(res => {
       this.searchResults.emit(res);
-      console.log(res);
     })
   }
 }
