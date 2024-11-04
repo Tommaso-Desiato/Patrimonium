@@ -3,12 +3,15 @@ import { ApiCallService } from '../../services/api-call.service';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { User } from '../../models/user-model';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+
 
 @Component({
   selector: 'app-user-search',
   standalone: true,
-  imports: [FormsModule, MatInputModule, MatButtonModule],
+  imports: [FormsModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatIconModule],
   templateUrl: './user-search.component.html',
   styleUrl: './user-search.component.css'
 })

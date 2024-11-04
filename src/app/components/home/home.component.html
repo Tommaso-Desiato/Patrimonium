@@ -1,7 +1,23 @@
 <app-login-form (submitEvent)="addUsers($event)"></app-login-form>
 
-<app-user-search (searchResults)="onSearchResults($event)"></app-user-search>
-
+<div class="flex justify-around">
+  <app-user-search
+    *ngIf="isAuthenticated"
+    (searchResults)="onSearchResults($event)"
+  ></app-user-search>
+  <a
+    mat-raised-button
+    class="my-1.5"
+    *ngIf="isAuthenticated"
+    [routerLink]="['/user-creation']"
+    routerLinkActive="active"
+    aria-label="Create new user"
+    ariaCurrentWhenActive="page"
+  >
+    Create new user
+  </a>
+</div>
+<!--
 <mat-accordion *ngIf="isAuthenticated">
   <mat-expansion-panel *ngFor="let user of users">
     <mat-expansion-panel-header>
@@ -24,20 +40,32 @@
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
-
-<a
-  [routerLink]="['/user-creation']"
-  routerLinkActive="active"
-  ariaCurrentWhenActive="page"
->
-  Create new user
-</a>
-
-<div *ngIf="!isAuthenticated">
-  <p>Non sei autenticato</p>
+-->
+<div *ngIf="isAuthenticated">
+  <mat-card *ngFor="let user of users" appearance="outlined" class="m-4">
+    <mat-card-header>
+      <mat-card-title> Name: {{ user.name }} </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Email: {{ user.email }}</p>
+      <p>Gender: {{ user.gender }}</p>
+      <p>Status: {{ user.status }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <a
+        mat-button
+        [routerLink]="['/user-posts', user.id]"
+        routerLinkActive="active"
+        aria-label="Show User's posts"
+        ariaCurrentWhenActive="page"
+        >Show user's posts</a
+      >
+      <button mat-button (click)="deleteUser(user.id)">Delete User</button>
+    </mat-card-actions>
+  </mat-card>
 </div>
-
 <app-paginator
+  *ngIf="isAuthenticated"
   [totalItems]="totalUsers"
   [itemsPerPage]="pageSize"
   [currentPage]="currentPage"

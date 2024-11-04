@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiCallService } from '../../services/api-call.service';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { CommonModule} from '@angular/common';
 import { User } from '../../models/user-model';
 import { LoginFormComponent } from "../login-form/login-form.component";
 import { AuthService } from '../../services/auth.service';
@@ -11,12 +11,15 @@ import { UserPostsComponent } from "../user-posts/user-posts.component";
 import { UserSearchComponent } from "../user-search/user-search.component";
 import { PaginatorComponent } from "../paginator/paginator.component";
 import { PageEvent } from '@angular/material/paginator';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from "@angular/material/card";
+
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgFor, NgIf, AsyncPipe, LoginFormComponent, HeaderComponent, MatExpansionModule, RouterModule, UserPostsComponent, RouterLinkActive, UserSearchComponent, PaginatorComponent],
+  imports: [ LoginFormComponent, HeaderComponent, MatExpansionModule, RouterModule, UserPostsComponent, RouterLinkActive, UserSearchComponent, PaginatorComponent, CommonModule, MatButtonModule, MatCardModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -31,12 +34,12 @@ export class HomeComponent implements OnInit{
   currentPage: number = 1;
 
   //Add users on login
-  addUsers(users: []) {
+  addUsers(users: User[]) {
    this.users = users;
   };
 
   //Change displayed users on search
-  onSearchResults(results: any[]): void {
+  onSearchResults(results: User[]): void {
     this.users = results;
   }
 

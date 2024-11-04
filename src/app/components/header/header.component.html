@@ -1,7 +1,30 @@
-<header *ngIf="isAuthenticated">
-  <a [routerLink]="['']"><button mat-stroked-button>Home</button></a>
-  <a [routerLink]="['/posts-feed']"><button mat-stroked-button>Feed</button></a>
-  <a [routerLink]="['']"
-    ><button (click)="logout()" mat-stroked-button>Logout</button></a
-  >
+<header
+  *ngIf="isAuthenticated"
+  class="text-center p-2 lg:p-6 bg-blue-600 text-white text-3xl lg:text-5xl font-bold"
+>
+  <a [routerLink]="['']"> <span>Patrimonium</span></a>
 </header>
+<nav mat-tab-nav-bar [tabPanel]="tabPanel" class="mb-4 md:mb-6">
+  <a
+    mat-tab-link
+    [routerLink]="['']"
+    (click)="activeLink = 'Home'"
+    [active]="activeLink == 'Home'"
+    >Home</a
+  >
+  <a
+    mat-tab-link
+    [routerLink]="['/posts-feed']"
+    (click)="activeLink = 'Feed'"
+    [active]="activeLink == 'Feed'"
+    >Feed</a
+  >
+  <a
+    mat-tab-link
+    [routerLink]="['']"
+    (click)="activeLink = 'Logout'"
+    [active]="activeLink == 'Logout'"
+    ><button (click)="logout()">Logout</button></a
+  >
+</nav>
+<mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>

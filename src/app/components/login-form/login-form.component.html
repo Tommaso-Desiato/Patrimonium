@@ -1,25 +1,40 @@
-<div *ngIf="!isAuthenticated">
-  <p>Get token at //INSERIRE LINK GOREST//</p>
-  <form #loginForm="ngForm" (ngSubmit)="onLogin()">
-    <mat-form-field appearance="outline">
-      <mat-label>Enter token here</mat-label>
-      <input
-        matInput
-        name="token"
-        [(ngModel)]="userToken"
-        #tokenInput="ngModel"
-        required
-      />
-    </mat-form-field>
+<header
+  *ngIf="!isAuthenticated"
+  class="text-center p-4 lg:p-6 bg-blue-600 text-white text-3xl lg:text-5xl font-bold"
+>
+  Patrimonium
+</header>
 
-    <button
-      type="submit"
-      mat-stroked-button
-      [disabled]="loginForm.invalid"
-      disabledInteractive
-      matTooltip="Enter a Token to login"
-    >
-      Login
-    </button>
-  </form>
+<div *ngIf="!isAuthenticated" class="mt-20 mx-5 md:max-w-screen-sm md:mx-auto">
+  <div class="w-full p-6 bg-white rounded-lg shadow-xl shadow-blue-200">
+    <h2 class="text-xl font-semibold text-gray-800 text-center mb-4">Login</h2>
+    <p class="text-center mb-4">
+      Get token at:
+      <a href="https://gorest.co.in/consumer/login">gorest.co.in</a>
+    </p>
+    <form #loginForm="ngForm" (ngSubmit)="onLogin()">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Enter token here</mat-label>
+        <input
+          matInput
+          name="token"
+          placeholder="Token"
+          [(ngModel)]="userToken"
+          #tokenInput="ngModel"
+          required
+        />
+      </mat-form-field>
+
+      <button
+        type="submit"
+        mat-raised-button
+        [disabled]="loginForm.invalid"
+        disabledInteractive
+        matTooltip="Enter a Token to login"
+        class="w-full"
+      >
+        Login
+      </button>
+    </form>
+  </div>
 </div>
