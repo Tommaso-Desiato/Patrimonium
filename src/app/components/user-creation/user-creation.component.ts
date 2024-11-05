@@ -6,6 +6,7 @@ import { ApiCallService } from '../../services/api-call.service';
 import { FormsModule } from '@angular/forms';
 import { MatRadioModule } from "@angular/material/radio";
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-creation',
@@ -23,14 +24,19 @@ export class UserCreationComponent {
     id: '',
   };
 
-  constructor(private apiCallService: ApiCallService) {}
+  constructor(private apiCallService: ApiCallService, private snackBar: MatSnackBar) {}
 
-  onSubmit(userForm: any): void {
-    if(userForm.valid) {
-      this.apiCallService.createUser(this.newUser).subscribe(res => {
-        userForm.reset();
-      })
-    } 
-  }
+  onSubmit(userForm: any): void { 
+    if (userForm.valid) { this.apiCallService.createUser(this.newUser).subscribe( res => {
+       userForm.reset();
+        this.snackBar.open('User created successfully', 'Close', { duration: 3000 });
+       },
+        (error: any) => {
+          let errorMessage = ''; 
+           if (error.status === 422) 
+            { errorMessage = 'Email already in use'; }
+             this.snackBar.open(errorMessage, 'Close', { duration: 3000 });
+ });
+ }
 }
-
+ }

@@ -13,12 +13,15 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from "@angular/material/card";
 import { MatDividerModule } from '@angular/material/divider';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ LoginFormComponent, HeaderComponent, RouterModule, UserPostsComponent, RouterLinkActive, UserSearchComponent, PaginatorComponent, CommonModule, MatButtonModule, MatCardModule,  MatDividerModule],
+  imports: [ LoginFormComponent, HeaderComponent, RouterModule, UserPostsComponent, RouterLinkActive, UserSearchComponent, PaginatorComponent, CommonModule, MatButtonModule, MatCardModule,  MatDividerModule, MatDialogModule, MatSnackBarModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -42,7 +45,11 @@ export class HomeComponent implements OnInit{
     this.users = results;
   }
 
-  constructor(private apiCall: ApiCallService, private authService: AuthService) {}
+  constructor(
+    private apiCall: ApiCallService, 
+    private authService: AuthService, 
+    private dialog: MatDialog, 
+    private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     //Subscribe to authentication status
@@ -70,10 +77,18 @@ export class HomeComponent implements OnInit{
   }
 
   deleteUser(userId: string):void {
-    this.apiCall.deleteUser(userId).subscribe(() => {
-      this.users = this.users.filter( (user: { id: string; }) => user.id !== userId);
-    }), (error: any) => {
-      console.error('',error)
-    }
+    const dialogRef = this.dialog.open(DeleteDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.apiCall.deleteUser(userId).subscribe(() => {
+          this.users = this.users.filter( (user: { id: string; }) => user.id !== userId);
+          this.snackBar.open('User deleted successfully', 'Close', {duration: 3000});
+        }), (error: any) => {
+          console.error('Error:',error)
+        }
+      }
+    })
+    
   }
 }
