@@ -1,0 +1,4 @@
+/*To override angular material default styling*/
+#delete-button {
+  color: red;
+}

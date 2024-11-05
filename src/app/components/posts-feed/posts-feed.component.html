@@ -1,42 +1,43 @@
-<!--Create new post-->
-<a
-  [routerLink]="['/post-creation']"
-  routerLinkActive="active"
-  ariaCurrentWhenActive="page"
-  >Create new post</a
->
-
 <!--Search posts by title or body-->
 <app-post-search (searchResults)="onSearchResults($event)"></app-post-search>
 
-<div *ngIf="posts.length > 0; else noPosts" class="p-4 space-y-4">
-  <div *ngFor="let post of posts" class="bg-white p-4 rounded-lg shadow-md">
-    <h3 class="text-lg font-bold">{{ post.title }}</h3>
-    <p class="text-gray-600">{{ post.body }}</p>
-
-    <!--Show comments button-->
-    <button
-      class="mt-3 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
-      (click)="toggleComments(post.id)"
-    >
-      Show Comments
-    </button>
-
-    <!--Only show comments when toggleComments is clicked and pass post id to comments component-->
-    <app-comments
-      *ngIf="showComments[post.id]"
-      [postId]="post.id"
-    ></app-comments>
-  </div>
+<!--Create new post-->
+<div class="flex justify-center">
+  <a
+    mat-raised-button
+    [routerLink]="['/post-creation']"
+    routerLinkActive="active"
+    aria-label="Create new post"
+    ariaCurrentWhenActive="page"
+    >Create new post</a
+  >
 </div>
 
-<ng-template #noPosts>
-  <p>Nessun post trovato per questo utente.</p>
-</ng-template>
-
-<ng-template #noComments>
-  <p>Nessun commento trovato per questo post.</p>
-</ng-template>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 drop-shadow-lg">
+  <mat-card *ngFor="let post of posts" appearance="outlined" class="m-4">
+    <mat-card-header class="bg-blue-600 text-white rounded-t-lg">
+      <mat-card-title class="pb-3">
+        {{ post.title }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <p class="pt-2">{{ post.body }}</p>
+      <mat-divider></mat-divider>
+    </mat-card-content>
+    <mat-card-actions>
+      <!--Show comments button-->
+      <button mat-button (click)="toggleComments(post.id)">Comments</button>
+    </mat-card-actions>
+    <mat-card-footer>
+      <!--Only show comments when toggleComments is clicked and pass post id to comments component-->
+      <app-comments
+        *ngIf="showComments[post.id]"
+        [postId]="post.id"
+      ></app-comments>
+    </mat-card-footer>
+  </mat-card>
+</div>
 
 <app-paginator
   [totalItems]="totalPosts"

@@ -1,18 +1,21 @@
-<div *ngIf="comments.length > 0; else noComments">
-  <ul>
-    <li *ngFor="let comment of comments">
-      <p>{{ comment.name }}</p>
-      <p>{{ comment.body }}</p>
-    </li>
-  </ul>
-</div>
+<mat-list *ngIf="comments.length > 0; else noComments">
+  <mat-list-item *ngFor="let comment of comments">
+    <span matListItemTitle>{{ comment.name }}</span>
+    <span matListItemLine class="pb-1">{{ comment.body }}</span>
+    <hr />
+  </mat-list-item>
+</mat-list>
 
 <ng-template #noComments>
   <p>No comments yet.</p>
 </ng-template>
 
 <!-- New comment form-->
-<form #commentForm="ngForm" (ngSubmit)="onSubmitComment(commentForm)">
+<form
+  #commentForm="ngForm"
+  (ngSubmit)="onSubmitComment(commentForm)"
+  class="grid grid-cols-2 m-1 gap-1"
+>
   <mat-form-field appearance="outline">
     <mat-label>Name</mat-label>
     <input
@@ -37,15 +40,15 @@
 
   <mat-form-field appearance="outline">
     <mat-label>Comment</mat-label>
-    <textarea
-      matInput
-      name="body"
-      [(ngModel)]="newComment.body"
-      required
-    ></textarea>
+    <input matInput name="body" [(ngModel)]="newComment.body" required />
   </mat-form-field>
 
-  <button mat-raised-button type="submit" [disabled]="commentForm.invalid">
+  <button
+    mat-raised-button
+    type="submit"
+    [disabled]="commentForm.invalid"
+    class="mt-1.5"
+  >
     Post Comment
   </button>
 </form>

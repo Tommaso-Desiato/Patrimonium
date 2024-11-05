@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { User } from '../../models/user-model';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @Component({
@@ -25,6 +25,7 @@ export class UserSearchComponent {
   onSubmit(): void {
     this.apiCallService.searchByName(this.query).subscribe(res => {
       this.searchResults.emit(res);
+      this.query = '';
     })
   }
 }

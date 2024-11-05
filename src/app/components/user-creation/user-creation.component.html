@@ -1,42 +1,45 @@
-<form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
-  <mat-form-field appearance="outline">
-    <mat-label>Name:</mat-label>
-    <input matInput name="name" [(ngModel)]="newUser.name" required />
-  </mat-form-field>
+<div class="flex justify-center mt-10">
+  <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+    <mat-form-field appearance="outline" class="mr-1 md:mr-2 lg:mr-4">
+      <mat-label>Name:</mat-label>
+      <input matInput name="name" [(ngModel)]="newUser.name" required />
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Email:</mat-label>
-    <input
-      matInput
-      type="email"
-      name="email"
-      [(ngModel)]="newUser.email"
-      required
-    />
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Email:</mat-label>
+      <input
+        matInput
+        type="email"
+        name="email"
+        [(ngModel)]="newUser.email"
+        required
+      />
+    </mat-form-field>
 
-  <div>
-    <mat-label>Gender:</mat-label>
-    <mat-radio-group name="gender" [(ngModel)]="newUser.gender" required>
-      <mat-radio-button value="male">Male</mat-radio-button>
-      <mat-radio-button value="female">Female</mat-radio-button>
-    </mat-radio-group>
-  </div>
+    <div class="flex justify-center items-center">
+      <mat-label>Gender:</mat-label>
+      <mat-radio-group name="gender" [(ngModel)]="newUser.gender" required>
+        <mat-radio-button value="male">Male</mat-radio-button>
+        <mat-radio-button value="female">Female</mat-radio-button>
+      </mat-radio-group>
+    </div>
 
-  <div>
-    <mat-label>Status</mat-label>
-    <mat-radio-group name="status" [(ngModel)]="newUser.status" required>
-      <mat-radio-button value="active">Active</mat-radio-button>
-      <mat-radio-button value="inactive">Inactive</mat-radio-button>
-    </mat-radio-group>
-  </div>
-
-  <button
-    type="submit"
-    mat-stroked-button
-    [disabled]="userForm.invalid"
-    matTooltip="Fill all field to submit"
-  >
-    Create User
-  </button>
-</form>
+    <div class="flex justify-center items-center">
+      <mat-label>Status</mat-label>
+      <mat-radio-group name="status" [(ngModel)]="newUser.status" required>
+        <mat-radio-button value="active">Active</mat-radio-button>
+        <mat-radio-button value="inactive">Inactive</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div class="flex justify-center">
+      <button
+        type="submit"
+        mat-stroked-button
+        [disabled]="userForm.invalid"
+        matTooltip="Fill all field to submit"
+      >
+        Create User
+      </button>
+    </div>
+  </form>
+</div>

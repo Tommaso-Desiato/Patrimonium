@@ -8,11 +8,14 @@ import { PageEvent } from '@angular/material/paginator';
 import { PostCreationComponent } from "../post-creation/post-creation.component";
 import { RouterLinkActive, RouterModule } from '@angular/router';
 import { PostSearchComponent } from "../post-search/post-search.component";
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from "@angular/material/card";
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-posts-feed',
   standalone: true,
-  imports: [NgIf, NgFor, CommentsComponent, PaginatorComponent, PostCreationComponent, RouterModule, RouterLinkActive, PostSearchComponent],
+  imports: [NgIf, NgFor, CommentsComponent, PaginatorComponent, PostCreationComponent, RouterModule, RouterLinkActive, PostSearchComponent, MatButtonModule, MatCardModule, MatDividerModule],
   templateUrl: './posts-feed.component.html',
   styleUrl: './posts-feed.component.css'
 })
@@ -50,6 +53,7 @@ export class PostsFeedComponent implements OnInit{
   //When toggleComments is clicked, switch comments visibility
   toggleComments(postId: string): void {
    this.showComments[postId] = !this.showComments[postId];
+   console.log(postId)
   }
 
   onPageChange(event: PageEvent) {

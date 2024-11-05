@@ -4,8 +4,7 @@ import { CommonModule} from '@angular/common';
 import { User } from '../../models/user-model';
 import { LoginFormComponent } from "../login-form/login-form.component";
 import { AuthService } from '../../services/auth.service';
-import { HeaderComponent } from "../header/header.component";
-import {MatExpansionModule} from '@angular/material/expansion'; 
+import { HeaderComponent } from "../header/header.component"; 
 import { RouterLinkActive, RouterModule } from '@angular/router';
 import { UserPostsComponent } from "../user-posts/user-posts.component";
 import { UserSearchComponent } from "../user-search/user-search.component";
@@ -13,13 +12,13 @@ import { PaginatorComponent } from "../paginator/paginator.component";
 import { PageEvent } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from "@angular/material/card";
-
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ LoginFormComponent, HeaderComponent, MatExpansionModule, RouterModule, UserPostsComponent, RouterLinkActive, UserSearchComponent, PaginatorComponent, CommonModule, MatButtonModule, MatCardModule],
+  imports: [ LoginFormComponent, HeaderComponent, RouterModule, UserPostsComponent, RouterLinkActive, UserSearchComponent, PaginatorComponent, CommonModule, MatButtonModule, MatCardModule,  MatDividerModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })

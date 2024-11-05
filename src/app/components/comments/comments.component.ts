@@ -3,11 +3,14 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { ApiCallService } from '../../services/api-call.service';
 import { NgFor, NgIf } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import {MatListModule} from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-comments',
   standalone: true,
-  imports: [FormsModule, MatInputModule, NgIf, NgFor],
+  imports: [FormsModule, MatInputModule, NgIf, NgFor, MatButtonModule, MatListModule, MatDividerModule],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.css'
 })

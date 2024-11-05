@@ -1,12 +1,29 @@
-<mat-form-field appearance="outline">
-  <mat-label>Search by Title</mat-label>
-  <input matInput [(ngModel)]="searchTitle" placeholder="Enter post title" />
-</mat-form-field>
+<div class="flex justify-around">
+  <form #postSearch="ngForm" (submit)="onSubmit()">
+    <mat-form-field appearance="outline" class="mr-1 md:mr-3 lg:mr-6">
+      <mat-label>Search by Title</mat-label>
+      <input matInput [(ngModel)]="searchTitle" name="searchTitle" />
+      <button
+        matSuffix
+        mat-icon-button
+        aria-label="Search"
+        (click)="onSubmit()"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
 
-<mat-form-field appearance="outline">
-  <mat-label>Search by Body</mat-label>
-  <input matInput [(ngModel)]="searchBody" placeholder="Enter post content" />
-</mat-form-field>
-
-<button mat-raised-button color="primary" (click)="onSearch()">Search</button>
-<button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+    <mat-form-field appearance="outline">
+      <mat-label>Search by Body</mat-label>
+      <input matInput [(ngModel)]="searchBody" name="searchBody" />
+      <button
+        matSuffix
+        mat-icon-button
+        aria-label="Search"
+        (click)="onSubmit()"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
+</div>

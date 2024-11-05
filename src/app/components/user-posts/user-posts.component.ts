@@ -4,11 +4,14 @@ import { ApiCallService } from '../../services/api-call.service';
 import { NgFor, NgIf } from '@angular/common';
 import { Post } from '../../models/post-model';
 import { CommentsComponent } from "../comments/comments.component";
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-user-posts',
   standalone: true,
-  imports: [NgIf, NgFor, CommentsComponent],
+  imports: [NgIf, NgFor, CommentsComponent, MatCardModule, MatDividerModule, MatButtonModule],
   templateUrl: './user-posts.component.html',
   styleUrl: './user-posts.component.css'
 })

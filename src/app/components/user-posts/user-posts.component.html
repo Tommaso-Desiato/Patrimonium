@@ -1,23 +1,32 @@
-<div *ngIf="posts.length > 0; else noPosts">
-  <div *ngFor="let post of posts">
-    <h3>{{ post.title }}</h3>
-    <p>{{ post.body }}</p>
-
-    <!--Show comments button-->
-    <button (click)="toggleComments(post.id)">Show Comments</button>
-
-    <!--Only show comments when toggleComments is clicked and pass post id to comments component-->
-    <app-comments
-      *ngIf="showComments[post.id]"
-      [postId]="post.id"
-    ></app-comments>
-  </div>
+<div
+  *ngIf="posts.length > 0; else noPosts"
+  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 drop-shadow-lg"
+>
+  <mat-card *ngFor="let post of posts" appearance="outlined" class="m-4">
+    <mat-card-header class="bg-blue-600 text-white rounded-t-lg">
+      <mat-card-title class="pb-3">
+        {{ post.title }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <p class="pt-2">{{ post.body }}</p>
+      <mat-divider></mat-divider>
+    </mat-card-content>
+    <mat-card-actions>
+      <!--Show comments button-->
+      <button mat-button (click)="toggleComments(post.id)">Comments</button>
+    </mat-card-actions>
+    <mat-card-footer>
+      <!--Only show comments when toggleComments is clicked and pass post id to comments component-->
+      <app-comments
+        *ngIf="showComments[post.id]"
+        [postId]="post.id"
+      ></app-comments>
+    </mat-card-footer>
+  </mat-card>
 </div>
 
 <ng-template #noPosts>
-  <p>Nessun post trovato per questo utente.</p>
-</ng-template>
-
-<ng-template #noComments>
-  <p>Nessun commento trovato per questo post.</p>
+  <p>No post found for this user.</p>
 </ng-template>

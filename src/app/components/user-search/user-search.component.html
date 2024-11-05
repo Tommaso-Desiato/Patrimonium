@@ -1,13 +1,7 @@
 <form #userSearch="ngForm" (submit)="onSubmit()">
   <mat-form-field appearance="outline">
-    <input
-      matInput
-      type="text"
-      [(ngModel)]="query"
-      name="query"
-      placeholder="Search Users by Name"
-      required
-    />
+    <mat-label>Search by Name</mat-label>
+    <input matInput type="text" [(ngModel)]="query" name="query" />
     <button matSuffix mat-icon-button aria-label="Search" (click)="onSubmit()">
       <mat-icon>search</mat-icon>
     </button>
