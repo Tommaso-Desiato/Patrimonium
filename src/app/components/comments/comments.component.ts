@@ -6,6 +6,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import {MatListModule} from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-comments',
@@ -25,17 +26,15 @@ export class CommentsComponent implements OnInit {
     body: '',
   };
 
-  constructor(private apiCallService: ApiCallService) {}
+  constructor(private apiCallService: ApiCallService, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.loadComments();
-    console.log(this.postId);
   }
 
   loadComments(): void {
     this.apiCallService.getComments(this.postId).subscribe(comments => {
       this.comments = comments;
-      console.log(comments);
     })
   }
 
@@ -49,9 +48,16 @@ export class CommentsComponent implements OnInit {
       };
 
       this.apiCallService.addComment(commentData).subscribe(comment => {
-        console.log(comment);
         this.comments.push(comment);
         commentForm.reset();
+      }, (error:any) => {
+        let errorMessage = 'Unexpected error';
+        if (error.error && error.error.length) {
+          errorMessage = error.error.map((err: {field: string; message: string})=>`${err.field} ${err.message}`).join(', '); 
+        } else if (error.message) {
+          errorMessage = error.message;
+        }
+        this.snackBar.open(errorMessage, 'Close', { duration: 3000});
       });
     }
   }

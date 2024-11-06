@@ -31,12 +31,15 @@ export class UserCreationComponent {
        userForm.reset();
         this.snackBar.open('User created successfully', 'Close', { duration: 3000 });
        },
-        (error: any) => {
-          let errorMessage = ''; 
-           if (error.status === 422) 
-            { errorMessage = 'Email already in use'; }
-             this.snackBar.open(errorMessage, 'Close', { duration: 3000 });
- });
+       (error:any) => {
+        let errorMessage = 'Unexpected error';
+        if (error.error && error.error.length) {
+          errorMessage = error.error.map((err: {field: string; message: string})=>`${err.field} ${err.message}`).join(', '); 
+        } else if (error.message) {
+          errorMessage = error.message;
+        }
+        this.snackBar.open(errorMessage, 'Close', { duration: 3000});
+      });
  }
 }
  }

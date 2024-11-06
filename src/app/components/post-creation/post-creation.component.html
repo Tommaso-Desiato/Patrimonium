@@ -1,26 +1,26 @@
-<form #postForm="ngForm" (ngSubmit)="onSubmit(postForm)">
-  <mat-form-field appearance="outline">
-    <mat-label>Title:</mat-label>
-    <input matInput name="title" [(ngModel)]="newPost.title" required />
-  </mat-form-field>
+<div class="mt-10 flex justify-center">
+  <form #postForm="ngForm" (ngSubmit)="onSubmit(postForm)">
+    <mat-form-field
+      appearance="outline"
+      class="mr-1 ml-20 md:ml-0 md:mr-2 lg:mr-4"
+    >
+      <mat-label>Title:</mat-label>
+      <input matInput name="title" [(ngModel)]="newPost.title" />
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label> Body: </mat-label>
-    <input
-      matInput
-      type="text"
-      name="body"
-      [(ngModel)]="newPost.body"
-      required
-    />
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="ml-20 md:ml-0">
+      <mat-label> Body: </mat-label>
+      <input matInput type="text" name="body" [(ngModel)]="newPost.body" />
+    </mat-form-field>
 
-  <button
-    type="submit"
-    mat-stroked-button
-    [disabled]="postForm.invalid"
-    matTooltip="Fill all field to submit"
-  >
-    Create Post
-  </button>
-</form>
+    <button
+      class="ml-32 md:ml-4"
+      type="submit"
+      mat-stroked-button
+      [disabled]="postForm.invalid"
+      matTooltip="Fill all field to submit"
+    >
+      Create Post
+    </button>
+  </form>
+</div>

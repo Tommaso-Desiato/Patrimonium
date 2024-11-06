@@ -1,11 +1,14 @@
 <div class="flex justify-center mt-10">
   <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
-    <mat-form-field appearance="outline" class="mr-1 md:mr-2 lg:mr-4">
+    <mat-form-field
+      appearance="outline"
+      class="mr-1 md:mr-2 lg:mr-4 ml-20 md:ml-0"
+    >
       <mat-label>Name:</mat-label>
       <input matInput name="name" [(ngModel)]="newUser.name" required />
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="ml-20 md:ml-0">
       <mat-label>Email:</mat-label>
       <input
         matInput

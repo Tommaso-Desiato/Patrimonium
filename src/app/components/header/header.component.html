@@ -4,7 +4,12 @@
 >
   <a [routerLink]="['']"> <span>Patrimonium</span></a>
 </header>
-<nav mat-tab-nav-bar [tabPanel]="tabPanel" class="mb-4 md:mb-6">
+<nav
+  mat-tab-nav-bar
+  [tabPanel]="tabPanel"
+  class="mb-4 md:mb-6"
+  *ngIf="isAuthenticated"
+>
   <a
     mat-tab-link
     [routerLink]="['']"
@@ -22,7 +27,7 @@
   <a
     mat-tab-link
     [routerLink]="['']"
-    (click)="activeLink = 'Logout'"
+    (click)="logout()"
     [active]="activeLink == 'Logout'"
     ><button (click)="logout()">Logout</button></a
   >
