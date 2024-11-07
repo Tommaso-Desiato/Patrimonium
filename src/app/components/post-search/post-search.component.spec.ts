@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PostSearchComponent } from './post-search.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('PostSearchComponent', () => {
   let component: PostSearchComponent;
@@ -8,7 +10,7 @@ describe('PostSearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PostSearchComponent]
+      imports: [PostSearchComponent, HttpClientTestingModule, BrowserAnimationsModule]
     })
     .compileComponents();
 

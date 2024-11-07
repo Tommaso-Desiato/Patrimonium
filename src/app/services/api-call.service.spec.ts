@@ -26,15 +26,17 @@ describe('ApiCallService', () => {
   });
 
   it('should get users', () => {
-    const dummyResponse = { users: [{ id: '1', name: 'John Doe', email: 'john@example.com', gender: 'male', status: 'active' }], total: 1 };
+    const dummyUsers: User[] = [ { id: '1', name: 'John Doe', email: 'john@example.com', gender: 'male', status: 'active' } ];
+    
+    const expectedResponse = { users: dummyUsers, total: 1 };
 
-    service.getUsers(1, 10).subscribe(response => {
-      expect(response).toEqual(dummyResponse);
+    service.getUsers(1, 1).subscribe(response => {
+      expect(response).toEqual(expectedResponse);
     });
 
-    const req = httpMock.expectOne(`https://gorest.co.in/public/v2/users?page=1&per_page=10`);
+    const req = httpMock.expectOne(`https://gorest.co.in/public/v2/users?page=1&per_page=1`);
     expect(req.request.method).toBe('GET');
-    req.flush(dummyResponse);
+    req.flush(dummyUsers);
   });
 
   it('should create user', () => {
@@ -57,10 +59,13 @@ describe('ApiCallService', () => {
 
   it('should get posts', () => {
     const dummyPosts: Post[] = [{ id: '1', user_id: 1, title: 'Post Title', body: 'Post body' }];
-    service.getAllPosts(1, 10).subscribe((posts: any) => {
-      expect(posts).toEqual(dummyPosts);
+
+    const expectedResponse = {posts: dummyPosts, total: 1};
+
+    service.getAllPosts(1, 1).subscribe((posts: any) => {
+      expect(posts).toEqual(expectedResponse);
     });
-    const req = httpMock.expectOne(`https://gorest.co.in/public/v2/posts`);
+    const req = httpMock.expectOne(`https://gorest.co.in/public/v2/posts?page=1&per_page=1`);
     expect(req.request.method).toBe('GET');
     req.flush(dummyPosts);
   });
@@ -85,7 +90,7 @@ describe('ApiCallService', () => {
     service.addComment(newComment).subscribe(comment => {
       expect(comment).toEqual(newComment);
     });
-    const req = httpMock.expectOne(`https://gorest.co.in/public/v2/comments`);
+    const req = httpMock.expectOne(`https://gorest.co.in/public/v2/posts/1/comments`);
     expect(req.request.method).toBe('POST');
     req.flush(newComment);
   });

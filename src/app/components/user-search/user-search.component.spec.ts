@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserSearchComponent } from './user-search.component';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('UserSearchComponent', () => {
   let component: UserSearchComponent;
@@ -8,7 +11,7 @@ describe('UserSearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserSearchComponent]
+      imports: [UserSearchComponent, HttpClientTestingModule,BrowserAnimationsModule]
     })
     .compileComponents();
 

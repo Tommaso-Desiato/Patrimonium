@@ -9,6 +9,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { of, throwError } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CommentsComponent', () => {
   let component: CommentsComponent;
@@ -18,15 +19,16 @@ describe('CommentsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        CommentsComponent,
         HttpClientTestingModule,
         MatSnackBarModule,
         FormsModule,
         MatInputModule,
         MatButtonModule,
         MatListModule,
-        MatDividerModule
+        MatDividerModule,
+        BrowserAnimationsModule
       ],
-      declarations: [CommentsComponent],
       providers: [ApiCallService]
     })
     .compileComponents();
@@ -59,6 +61,6 @@ describe('CommentsComponent', () => {
 
     component.onSubmitComment(commentForm);
 
-    expect(snackBarSpy).toHaveBeenCalledWith('body can\'t be blank', 'Chiudi', { duration: 3000 });
+    expect(snackBarSpy).toHaveBeenCalledWith('body can\'t be blank', 'Close', { duration: 3000 });
   });
 });

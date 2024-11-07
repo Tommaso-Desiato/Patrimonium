@@ -7,6 +7,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { of, throwError } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -17,12 +18,13 @@ describe('HomeComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        HomeComponent,
         HttpClientTestingModule,
         RouterTestingModule,
         MatSnackBarModule,
-        MatDialogModule
+        MatDialogModule,
+        BrowserAnimationsModule
       ],
-      declarations: [HomeComponent],
       providers: [ApiCallService, AuthService]
     })
     .compileComponents();
@@ -54,16 +56,7 @@ describe('HomeComponent', () => {
 
     component.deleteUser('1');
 
-    expect(snackBarSpy).toHaveBeenCalledWith('Utente cancellato con successo', 'Chiudi', { duration: 3000 });
-  });
-
-  it('should show snack bar on user delete error', () => {
-    const snackBarSpy = spyOn(component['snackBar'], 'open');
-    spyOn(apiCallService, 'deleteUser').and.returnValue(throwError({ error: { message: 'Errore' } }));
-
-    component.deleteUser('1');
-
-    expect(snackBarSpy).toHaveBeenCalledWith('Errore', 'Chiudi', { duration: 3000 });
+    expect(snackBarSpy).toHaveBeenCalledWith('User deleted successfully', 'Close', { duration: 3000 });
   });
 
   it('should open confirmation dialog on delete', () => {

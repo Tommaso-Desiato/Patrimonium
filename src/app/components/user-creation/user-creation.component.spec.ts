@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { of, throwError } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('UserCreationComponent', () => {
   let component: UserCreationComponent;
@@ -18,15 +19,16 @@ describe('UserCreationComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        UserCreationComponent,
         FormsModule,
         MatFormFieldModule,
         MatInputModule,
         MatRadioModule,
         MatButtonModule,
         MatSnackBarModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        BrowserAnimationsModule
       ],
-      declarations: [ UserCreationComponent ],
       providers: [ ApiCallService ]
     })
     .compileComponents();
