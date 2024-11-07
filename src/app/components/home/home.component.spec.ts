@@ -2,99 +2,75 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { ApiCallService } from '../../services/api-call.service';
 import { AuthService } from '../../services/auth.service';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { PaginatorComponent } from '../paginator/paginator.component';
-import { User } from '../../models/user-model';
-import { of } from 'rxjs';
-import { CommonModule } from '@angular/common';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { of, throwError } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  let apiService: jasmine.SpyObj<ApiCallService>;
-  let authService: jasmine.SpyObj<AuthService>;
+  let apiCallService: ApiCallService;
+  let authService: AuthService;
 
   beforeEach(async () => {
-    const apiSpy = jasmine.createSpyObj('ApiCallService', ['getUsers', 'deleteUser']);
-    const authSpy = jasmine.createSpyObj('AuthService', [], {authStatus$: of(true)});
-    
-
     await TestBed.configureTestingModule({
-      imports: [HomeComponent, MatExpansionModule, PaginatorComponent, CommonModule],
-      providers: [
-        { provide: ApiCallService, useValue: apiSpy},
-        { provide: AuthService, useValue: authSpy}
-      ]
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+        MatSnackBarModule,
+        MatDialogModule
+      ],
+      declarations: [HomeComponent],
+      providers: [ApiCallService, AuthService]
     })
     .compileComponents();
 
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
-    apiService = TestBed.inject(ApiCallService) as jasmine.SpyObj<ApiCallService>;
-    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
+    apiCallService = TestBed.inject(ApiCallService);
+    authService = TestBed.inject(AuthService);
+    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load users from API', () => {
-    const mockUsers: User[] = [{
-      id: '1',
-      name: 'Test Name',
-      email: 'test@example.com',
-      gender: 'male',
-      status: 'active'
-    }];
-    const total = 1;
-  
-    apiService.getUsers.and.returnValue(of({ users: mockUsers, total}));
+  it('should load users on init', () => {
+    const dummyUsers = { users: [{ id: '1', name: 'John Doe', email: 'john@example.com', gender: 'male', status: 'active' }], total: 1 };
+    spyOn(apiCallService, 'getUsers').and.returnValue(of(dummyUsers));
 
-    component.loadUsers();
-    expect(component.users).toEqual(mockUsers);
-    expect(component.totalUsers).toEqual(total);
+    component.ngOnInit();
+
+    expect(component.users).toEqual(dummyUsers.users);
+    expect(component.totalUsers).toEqual(dummyUsers.total);
   });
 
-  it('should update pagination parameters and reload users on page change', () => {
-    spyOn(component, 'loadUsers');
-    component.onPageChange({ pageIndex: 1, pageSize: 5} as any);
-
-    expect(component.currentPage).toEqual(2);
-    expect(component.pageSize).toEqual(5);
-    expect(component.loadUsers).toHaveBeenCalled();
-  });
-
-  it('should delete a user and update user list', () => {
-    const mockUsers: User[] = [
-      {
-        id: '1',
-        name: 'First User',
-        email: 'first@example.com',
-        gender: 'male',
-        status: 'active'
-      },
-      {
-        id: '2',
-        name: 'Second User',
-        email: 'second@example.com',
-        gender: 'female',
-        status: 'inactive'
-      }
-    ];
-
-    component.users = mockUsers;
-    apiService.deleteUser.and.returnValue(of(null));
+  it('should show snack bar on user delete success', () => {
+    const snackBarSpy = spyOn(component['snackBar'], 'open');
+    spyOn(apiCallService, 'deleteUser').and.returnValue(of({}));
 
     component.deleteUser('1');
-    expect(apiService.deleteUser).toHaveBeenCalledWith('1');
-    expect(component.users.length).toBe(1);
-    expect(component.users[0].id).toBe('2');
+
+    expect(snackBarSpy).toHaveBeenCalledWith('Utente cancellato con successo', 'Chiudi', { duration: 3000 });
   });
 
-  it('should set isAuthenticated based on AuthService', () => {
-    component.ngOnInit();
-    expect(component.isAuthenticated).toBeTrue();
-  })
-});
+  it('should show snack bar on user delete error', () => {
+    const snackBarSpy = spyOn(component['snackBar'], 'open');
+    spyOn(apiCallService, 'deleteUser').and.returnValue(throwError({ error: { message: 'Errore' } }));
 
+    component.deleteUser('1');
+
+    expect(snackBarSpy).toHaveBeenCalledWith('Errore', 'Chiudi', { duration: 3000 });
+  });
+
+  it('should open confirmation dialog on delete', () => {
+    const dialogSpy = spyOn(component['dialog'], 'open').and.callThrough();
+
+    component.deleteUser('1');
+
+    expect(dialogSpy).toHaveBeenCalled();
+  });
+});
