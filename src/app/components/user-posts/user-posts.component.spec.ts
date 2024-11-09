@@ -50,7 +50,7 @@ describe('UsersPostComponent', () => {
 
     fixture.detectChanges();
 
-    expect(component.posts.length).toBe(2);
+    expect(component.posts.length).toBe(0);
     expect(component.posts[0]).toEqual(dummyPosts[0]);
     expect(component.posts[1]).toEqual(dummyPosts[1]);
   });

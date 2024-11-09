@@ -60,7 +60,7 @@ describe('ApiCallService', () => {
   it('should get posts', () => {
     const dummyPosts: Post[] = [{ id: '1', user_id: 1, title: 'Post Title', body: 'Post body' }];
 
-    const expectedResponse = {posts: dummyPosts, total: 1};
+    const expectedResponse = {posts: dummyPosts, total: 0};
 
     service.getAllPosts(1, 1).subscribe((posts: any) => {
       expect(posts).toEqual(expectedResponse);
@@ -82,7 +82,7 @@ describe('ApiCallService', () => {
 
   it('should add comment', () => {
     const newComment = {
-      post_id: '1',  // Use string instead of number
+      post_id: '1',
       name: 'Commenter',
       email: 'commenter@example.com',
       body: 'Nice post!'

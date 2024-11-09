@@ -66,7 +66,11 @@ export class HomeComponent implements OnInit{
       this.users = Array.isArray(res.users) ? res.users : [res.users];
       //Get total users
       this.totalUsers = res.total;
-    })
+    }, error => {
+      this.snackBar.open('Failed to load users', 'Close', {duration: 3000});
+      console.error(error);
+    }
+  )
   } 
 
   //Method to update page Index
@@ -85,6 +89,7 @@ export class HomeComponent implements OnInit{
           this.users = this.users.filter( (user: { id: string; }) => user.id !== userId);
           this.snackBar.open('User deleted successfully', 'Close', {duration: 3000});
         }), (error: any) => {
+          this.snackBar.open('Failed to delete user', 'Close', { duration: 3000 });
           console.error('Error:',error)
         }
       }

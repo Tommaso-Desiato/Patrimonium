@@ -42,7 +42,8 @@ describe('HeaderComponent', () => {
     const logoutSpy = spyOn(component, 'logout').and.callThrough();
     component.isAuthenticated = true;
     fixture.detectChanges();
-    const button = fixture.debugElement.nativeElement.querySelector('a[routerLink=""] button');
+
+    const button = fixture.debugElement.nativeElement.querySelector('button#logout-button');
     expect(button).not.toBeNull();
     button.click();
     expect(logoutSpy).toHaveBeenCalled();
