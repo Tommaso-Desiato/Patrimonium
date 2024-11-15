@@ -55,7 +55,9 @@ export class HomeComponent implements OnInit{
     //Subscribe to authentication status
     this.authService.authStatus$.subscribe(status => {
       this.isAuthenticated = status;
-      this.loadUsers();
+      if (this.isAuthenticated) {
+        this.loadUsers();
+      }  
     });
   }
 
